@@ -6,6 +6,8 @@
   {% assign teaser = site.teaser %}
 {% endif %}
 
+{% assign teaser_first_char = teaser | slice: 0, 1 %}
+
 {% if post.id %}
   {% assign title = post.title | markdownify | remove: "<p>" | remove: "</p>" %}
 {% else %}
@@ -20,6 +22,8 @@
         <img src=
           {% if teaser contains "://" %}
             "{{ teaser }}"
+          {% elsif teaser_first_char == "/" %}
+            "{{ teaser | prepend: base_path }}"
           {% else %}
             "{{ teaser | prepend: "/images/" | prepend: base_path }}"
           {% endif %}
